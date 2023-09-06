@@ -57,6 +57,11 @@ const BooksList: React.FC = () => {
             id="filter"
             value={name as string}
             onChange={handleChangeName}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                handleFetchBooks(e);
+              }
+            }}
           />
           <button className="btn" type="submit">
             Найти
