@@ -26,8 +26,8 @@ export const getBooksByGenre = async (
     const response = await googleBooksApi.get<GetBooksListResponse>("volumes", {
       params: {
         q: queryString,
-        orderBy: sorting,
         startIndex: (page - 1) * 30,
+        orderBy: sorting === "newest" ? "newest" : "relevance",
         maxResults: 30,
       },
     });

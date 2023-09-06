@@ -38,8 +38,8 @@ const booksSlice = createSlice({
     setGenre: (state, action: PayloadAction<string>) => {
       state.filter.genre = action.payload;
     },
-    setSort: (state, action: PayloadAction<string>) => {
-      state.filter.sort as "newest" | "relevance" == action.payload;
+    setSort: (state, action: PayloadAction<"newest" | "relevance">) => {
+      state.filter.sort = action.payload;
     },
     setBook: (state, action: PayloadAction<{ book: Book | null | undefined }>) => {
       state.oneBook = action.payload.book;

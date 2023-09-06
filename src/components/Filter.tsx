@@ -12,7 +12,7 @@ const Filter = () => {
   };
 
   const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const selectedSort = event.target.value;
+    const selectedSort = event.target.value as "newest" | "relevance";
     dispatch(setSort(selectedSort));
   };
 
