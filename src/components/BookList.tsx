@@ -1,6 +1,6 @@
 import { fetchBooksByGenre } from "../redux/thunk";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useRef } from "react";
 import "../styles/list.css";
 import { Book } from "../types/typesAndIntefraces";
 import Filter from "./Filter";
@@ -13,6 +13,7 @@ const BooksList: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState<string | null>("");
+  const [previousName, setPreviousName] = useState<string | null>("");
   const { books, page, totalItems, filter, loading } = useAppSelector(
     (state) => state.books
   );
@@ -22,15 +23,19 @@ const BooksList: React.FC = () => {
 
   const handleChangeName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setName(event.target.value);
+      const newName = event.target.value;
+      setName(newName);
     },
     []
   );
 
   const handleFetchBooks = (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(resetBooks());
-    dispatch(fetchBooksByGenre({ genre, page, name, sorting }));
+    if (name !== previousName) {
+      dispatch(resetBooks());
+      dispatch(fetchBooksByGenre({ genre, page, name, sorting }));
+      setPreviousName(name);
+    } else alert("Введите новое значение в запрос!")
   };
 
   const handleFetchMoreBooks = () => {
